@@ -1,0 +1,18 @@
+{
+  "name": "dquack",
+  "version": "1.0.0",
+  "description": "Quickly provision services utilizing docker",
+  "private": true,
+  "author": "pavlos noulis <pavlos.noulis@gmail.com>",
+  "repository": "github:pnoulis/dquack",
+  "homepage": "https://github.com/pnoulis/dquack#readme",
+  "bugs": {
+    "url": "https://github.com/pnoulis/dquack/issues"
+  },
+  "license": "GNU-3.0+",
+  "keywords": [],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
+  }
+}
