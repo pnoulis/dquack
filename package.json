@@ -1,27 +1,31 @@
 {
-  "name": "dquack",
-  "version": "1.0.0",
-  "description": "Quickly provision services utilizing docker",
-  "private": true,
-  "author": "pavlos noulis <pavlos.noulis@gmail.com>",
-  "repository": "github:pnoulis/dquack",
-  "homepage": "https://github.com/pnoulis/dquack#readme",
-  "bugs": {
-    "url": "https://github.com/pnoulis/dquack/issues"
-  },
-  "license": "GNU-3.0+",
-  "keywords": [],
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js"
-  },
-  "devDependencies": {
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
-  },
-  "dependencies": {
-    "@koa/router": "^12.0.0",
-    "koa": "^2.13.4"
-  }
+    "name": "dquack",
+    "version": "1.0.0",
+    "description": "Quickly provision services utilizing docker",
+    "private": true,
+    "author": "pavlos noulis <pavlos.noulis@gmail.com>",
+    "repository": "github:pnoulis/dquack",
+    "homepage": "https://github.com/pnoulis/dquack#readme",
+    "bugs": {
+        "url": "https://github.com/pnoulis/dquack/issues"
+    },
+    "license": "GNU-3.0+",
+    "keywords": [],
+    "type": "module",
+    "browserslist": [
+        "current node"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --config webpack.config.js"
+    },
+    "devDependencies": {
+        "browserslist": "^4.21.3",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0"
+    },
+    "dependencies": {
+        "@koa/router": "^12.0.0",
+        "koa": "^2.13.4"
+    }
 }

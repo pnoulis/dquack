@@ -1,11 +1,10 @@
 import { join, parse } from 'node:path';
 
-const 
-projectRoot = parse(new URL(import.meta.url).pathname).dir.substring(1,)
+const
+projectRoot = parse(new URL(import.meta.url).pathname).dir
 
 export default {
     mode: 'development',
-    target: ['node18', 'es2021'],
     entry: {
         main: join(projectRoot, 'src', 'index.js')
     },
