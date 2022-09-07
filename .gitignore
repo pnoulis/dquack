@@ -1,8 +1,22 @@
+# ---------------- MY PERSONAL ADDITIONS ---------------------- #
+
 # emacs autosave files
 .#*
 # build
 /build
+# variables for any environment; (dev | prod | ...)
+# .*.defaults .*.example are tracked
+.env*
+!.env.example
+# tmp for experients
+/tmp/*
+!/tmp/.gitkeep
 
+# ---------------- MY PERSONAL ADDITIONS ---------------------- #
+
+
+
+# -------------------- GITHUB TEMPLATES ----------------------- #
 # Logs
 logs
 *.log
@@ -73,9 +87,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
