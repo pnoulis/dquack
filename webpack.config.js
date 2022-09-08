@@ -38,5 +38,8 @@ export default {
             // 4th CL arguments trample all
             systemvars: true
         })
-    ]
+    ],
+    experiments: {
+        topLevelAwait: true
+    }
 }

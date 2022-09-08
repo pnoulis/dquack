@@ -1,17 +1,22 @@
 import Router from '@koa/router';
+import list from './service/list.js';
+import touch from './service/touch.js';
+import start from './service/start.js';
+import stop from './service/stop.js';
+
 const router = new Router();
 
-router.get('/service/list', async (ctx, next) => {
-    ctx.response.body = '/service/list';
+router.get('/service', async (ctx, next) => {
+    ctx.response.body = list();
 });
-router.post('/service/touch/:id', async (ctx, next) => {
-    ctx.response.body = `/service/touch/${ctx.params.id}`
+router.post('/service/:id', async (ctx, next) => {
+    ctx.response.body = touch(ctx.params.id);
 });
-router.post('/service/start/:id', async (ctx, next) => {
-    ctx.response.body = `/service/start/${ctx.params.id}`
+router.put('/service/:id', async (ctx, next) => {
+    ctx.response.body = start(ctx.params.id);
 });
-router.post('/service/stop/:id', async (ctx, next) => {
-    ctx.response.body = `/service/stop/${ctx.params.id}`
+router.delete('/service/:id', async (ctx, next) => {
+    ctx.response.body = stop(ctx.params.id);
 });
 
 export default router;

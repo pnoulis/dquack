@@ -1,8 +1,7 @@
 import Koa from 'koa';
-import Router from '@koa/router';
-import KoaBody from 'koa-body';
-import services from './routes.js';
 import koaBody from 'koa-body';
+import Router from '@koa/router';
+import services from './routes.js';
 
 const app = new Koa();
 const router = new Router();
@@ -16,7 +15,7 @@ if (process.env.NODE_ENV === 'development') {
 router.get('/', async (ctx, next) => {
     ctx.response.body = router.stack.map($_ => $_.path)
 });
-router.use(services.routes());
+router.use(services.routes(), services.allowedMethods());
 
 app.use(
     router.routes(),
