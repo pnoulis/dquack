@@ -1,8 +1,17 @@
 import { join, parse } from 'node:path';
 import Dotenv from 'dotenv-webpack';
 
-const
-projectRoot = parse(new URL(import.meta.url).pathname).dir
+let projectRoot = ''
+switch (process.platform) {
+    case 'win32':
+        projectRoot = parse(new URL(import.meta.url).pathname).dir.substring(1,)
+        break;
+    case 'linux':
+        projectRoot = parse(new URL(import.meta.url).pathname).dir
+        break;
+    default:
+        throw `Unrecognized platform: ${process.platform}`
+}
 
 export default {
     mode: `${process.env.NODE_ENV}`,
