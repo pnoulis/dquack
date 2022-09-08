@@ -9,10 +9,10 @@ const router = new Router();
 router.get('/service', async (ctx, next) => {
     ctx.response.body = list();
 });
-router.post('/service/:id', async (ctx, next) => {
+router.put('/service/:id', async (ctx, next) => {
     ctx.response.body = touch(ctx.params.id);
 });
-router.put('/service/:id', async (ctx, next) => {
+router.post('/service/:id', async (ctx, next) => {
     ctx.response.body = start(ctx.params.id);
 });
 router.delete('/service/:id', async (ctx, next) => {
