@@ -1,5 +1,6 @@
 import { resolve, parse } from 'node:path';
-import Dotenv from 'dotenv-webpack';
+import NodemonPlugin from 'nodemon-webpack-plugin';
+import DotenvPlugin from 'dotenv-webpack';
 
 const projectRoot = parse(new URL(import.meta.url).pathname).dir
 
@@ -18,7 +19,7 @@ export default {
         preferRelative: false
     },
     plugins: [
-        new Dotenv({
+        new DotenvPlugin({
             // 1st be safe
             safe: resolve(projectRoot, 'config', '.env.example'),
             // 2nd load defaults
@@ -27,6 +28,14 @@ export default {
             path: resolve(projectRoot, 'config', '.env.dev'),
             // 4th CL arguments trample all
             systemvars: true
+        }),
+        new NodemonPlugin({
+          watch: resolve(projectRoot, 'build'),
+          runOnChangeOnly: false,
+          events: {
+            "start": "echo start",
+            "restart": "echo restart",
+          }
         })
     ],
     experiments: {
