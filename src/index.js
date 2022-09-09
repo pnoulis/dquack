@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import koaBody from 'koa-body';
+import koaBody from 'koa-bodyparser';
 import Router from '@koa/router';
 import services from './routes.js';
 
