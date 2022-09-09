@@ -17,7 +17,7 @@
     ],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "webpack --config webpack.config.js"
+        "build": "NODE_ENV=development webpack --config webpack.config.js"
     },
     "devDependencies": {
         "browserslist": "^4.21.3",
