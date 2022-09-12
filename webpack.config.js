@@ -30,14 +30,9 @@ export default {
       systemvars: true
     }),
     new NodemonPlugin({
+      script: resolve(projectRoot, 'build', 'main.bundle.cjs'),
       watch: resolve(projectRoot, 'build'),
       runOnChangeOnly: false,
-      stdout: false,
-      events: {
-        "start": "echo start",
-        "restart": "echo restart",
-        "stdout": "echo stdout"
-      }
     })
   ],
   experiments: {

@@ -6,10 +6,10 @@ import stop from './service/stop.js';
 
 const router = new Router();
 
-router.get('/service', async (ctx, next) => {
+router.get('/services', async (ctx, next) => {
     ctx.response.body = list();
 });
-router.put('/service/:id', async (ctx, next) => {
+router.get('/service/:id', async (ctx, next) => {
     ctx.response.body = touch(ctx.params.id);
 });
 router.post('/service/:id', async (ctx, next) => {

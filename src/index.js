@@ -21,4 +21,4 @@ app.use(
   router.routes(),
   router.allowedMethods(),
 );
-app.listen(8080); // 80 thousand
+app.listen(8080); // 80 thousand and 80
