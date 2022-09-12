@@ -3,6 +3,9 @@ import NodemonPlugin from 'nodemon-webpack-plugin';
 import DotenvPlugin from 'dotenv-webpack';
 
 const projectRoot = parse(new URL(import.meta.url).pathname).dir
+const dd = ()  => {
+  console.log('hello world');
+}
 
 export default {
   mode: `${process.env.NODE_ENV}`,
@@ -33,6 +36,12 @@ export default {
       script: resolve(projectRoot, 'build', 'main.bundle.cjs'),
       watch: resolve(projectRoot, 'build'),
       runOnChangeOnly: false,
+      events: {
+        start: "sleep 3; dquack.sh 2>&1"
+      },
+      env: {
+        NODE_ENV: 'development',
+      }
     })
   ],
   experiments: {
