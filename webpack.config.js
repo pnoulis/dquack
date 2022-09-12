@@ -1,6 +1,7 @@
 import { resolve, parse } from 'node:path';
 import NodemonPlugin from 'nodemon-webpack-plugin';
 import DotenvPlugin from 'dotenv-webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const projectRoot = parse(new URL(import.meta.url).pathname).dir
 const dd = ()  => {
@@ -42,6 +43,11 @@ export default {
       env: {
         NODE_ENV: 'development',
       }
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: resolve(projectRoot, 'assets', 'services'), to: resolve(projectRoot, 'build', 'assets', 'services') }
+      ]
     })
   ],
   experiments: {
