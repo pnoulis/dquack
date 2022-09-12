@@ -7,7 +7,7 @@ import stop from './service/stop.js';
 const router = new Router();
 
 router.get('/services', async (ctx, next) => {
-    ctx.response.body = list();
+    ctx.response.body = await list();
 });
 router.get('/service/:id', async (ctx, next) => {
     ctx.response.body = touch(ctx.params.id);
