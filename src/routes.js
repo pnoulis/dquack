@@ -10,7 +10,7 @@ router.get('/services', async (ctx, next) => {
     ctx.response.body = await list();
 });
 router.get('/service/:id', async (ctx, next) => {
-    ctx.response.body = touch(ctx.params.id);
+    ctx.response.body = await touch(ctx.params.id);
 });
 router.post('/service/:id', async (ctx, next) => {
     ctx.response.body = start(ctx.params.id);

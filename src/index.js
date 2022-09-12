@@ -12,6 +12,11 @@ if (process.env.NODE_ENV === 'development') {
   app.use(PrettyJson({ pretty: true, spaces: 2 }));
 }
 
+app.use(async function(ctx, next) {
+  console.log(ctx.href);
+  await next();
+});
+
 router.get('/', async (ctx, next) => {
   ctx.response.body = router.stack.map($_ => $_.path)
 });
