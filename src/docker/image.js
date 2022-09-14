@@ -2,8 +2,9 @@
  * Module dependencies
  */
 import { Docker_client } from './utils.js';
+import { config } from '../utils.js';
 
-const BASE_REPOSITORY = 'bratnet';
+const BASE_REPOSITORY = config.repositories;
 
 Object.setPrototypeOf(Image.prototype, Docker_client.prototype);
 

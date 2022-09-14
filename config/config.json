@@ -1,0 +1,4 @@
+{
+  "repositories": "bratnet/mssql",
+  "assets": "./assets/services"
+}

@@ -11,9 +11,9 @@ function Service(user, app) {
 }
 
 Service.prototype.resolve = async function () {
-  this.asset = await Asset.prototype.resolve(this) || null;
-  this.image = await Image.prototype.resolve(this) || null;
-  this.container = await Container.prototype.resolve(this) || null;
+  this.asset = await Asset.prototype.resolve(this);
+  this.image = await Image.prototype.resolve(this);
+  this.container = await Container.prototype.resolve(this);;
   return this;
 }
 Service.prototype.ls = async function () {
