@@ -1,4 +1,9 @@
-import { Asset, Image, Container } from './docker.js';
+/**
+ * Module dependencies
+ */
+import Asset from '../docker/asset.js';
+import Image from '../docker/image.js';
+import Container from '../docker/container.js';
 
 function Service(user, app) {
   this.user = user;

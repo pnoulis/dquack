@@ -1,20 +1,10 @@
 /**
  * Module dependencies
  */
+
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-const PATH_ASSETS = './assets/services';
-
-/**
- * Docker Client
- */
-const exec = async function dockerClient(...args) {
-}
-
-/**
- * Docker Asset
- */
 function Asset(service_name, path) {
   this.ID = service_name;
   this.path = path;
@@ -28,22 +18,4 @@ Asset.prototype.ls = async function listAllAvailableAssets() {
   return readdir(PATH_ASSETS);
 }
 
-/**
- * Docker Image
- */
-function Image(name) {
-}
-Image.prototype.resolve = async function (service) {
-}
-Image.prototype.exec = exec;
-
-/**
- * Docker Container
- */
-function Container() {
-}
-Container.prototype.resolve = async function (service) {
-}
-Container.prototype.exec = exec;
-
-export { Asset, Image, Container };
+export default Asset;
