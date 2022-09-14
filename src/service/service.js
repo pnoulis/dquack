@@ -1,15 +1,11 @@
 import { Asset, Image, Container } from './docker.js';
 
-function Service(user, name) {
+function Service(user, app) {
   this.user = user;
-  this.name = name || '';
+  this.app = app;
 }
 
-Service.prototype.resolve = async function (user, service) {
-  if (!(this instanceof Service)) {
-    return Service.prototype.resolve.bind(new Service(user, service))(user, service);
-  }
-  this.name = service || user;
+Service.prototype.resolve = async function () {
   this.asset = await Asset.prototype.resolve(this) || null;
   this.image = await Image.prototype.resolve(this) || null;
   this.container = await Container.prototype.resolve(this) || null;
@@ -18,10 +14,16 @@ Service.prototype.resolve = async function (user, service) {
 Service.prototype.ls = async function () {
   return Asset.prototype.ls();
 }
-Service.prototype.procure = function () {
+Service.prototype.procure = function (service) {
+  this.name = service;
+  return this.resolve();
 }
-Service.prototype.start = function () {
+Service.prototype.start = function (service, settings) {
+  this.settings = settings;
+  return this;
 }
-Service.prototype.stop = function () {
+Service.prototype.stop = function (service, settings) {
+  this.settings = settings;
+  return this;
 }
 export default Service;

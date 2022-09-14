@@ -4,9 +4,6 @@ import DotenvPlugin from 'dotenv-webpack';
 import CopyPlugin from 'copy-webpack-plugin';
 
 const projectRoot = parse(new URL(import.meta.url).pathname).dir
-const dd = ()  => {
-  console.log('hello world');
-}
 
 export default {
   mode: `${process.env.NODE_ENV}`,

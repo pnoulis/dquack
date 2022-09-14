@@ -1,24 +1,24 @@
+/**
+ * Module dependencies
+ */
 import Router from '@koa/router';
+import Service from './service.js';
 
 const router = new Router();
+router.use(async (ctx, next) => {
+  ctx.state.service = new Service(ctx.query.user, ctx.query.app);
+  await next();
+});
 router.get('/service', async (ctx, next) => {
-  ctx.response.body = {
-    route: 'get:services'
-  };
+  ctx.response.body = await ctx.state.service.ls();
 });
 router.get('/service/:id', async (ctx, next) => {
-  ctx.response.body = {
-    route: 'get:service/:id'
-  };
+  ctx.response.body = await ctx.state.service.procure(ctx.params.id);
 });
 router.post('/service/:id', async (ctx, next) => {
-  ctx.response.body = {
-    route: 'post:service/:id'
-  };
+  ctx.response.body = await ctx.state.service.start(ctx.params.id, ctx.request.body);
 });
 router.delete('/service/:id', async (ctx, next) => {
-  ctx.response.body = {
-    route: 'delete:service/:id'
-  };
+  ctx.response.body = await ctx.state.service.stop(ctx.params.id, ctx.request.body);
 });
 export default router;

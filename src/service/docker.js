@@ -1,12 +1,10 @@
+/**
+ * Module dependencies
+ */
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
-export { Asset, Image, Container };
 
-const PATH_ASSETS = resolve(
-  new URL(import.meta.url).pathname,
-  '../../../',
-  'assets/services'
-);
+const PATH_ASSETS = './assets/services';
 
 /**
  * Docker Client
@@ -47,3 +45,5 @@ function Container() {
 Container.prototype.resolve = async function (service) {
 }
 Container.prototype.exec = exec;
+
+export { Asset, Image, Container };
