@@ -4,6 +4,9 @@
 
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { Docker_client } from './utils.js';
+
+Object.setPrototypeOf(Asset.prototype, Docker_client);
 
 function Asset(service_name, path) {
   this.ID = service_name;

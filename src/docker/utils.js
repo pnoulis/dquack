@@ -2,7 +2,9 @@
  * Module dependencies
  */
 
-const exec = async function dockerClient(...args) {
-}
+function Docker_client() {
+};
+Docker_client.prototype.exec = async function runADockerCommand(...args) {
+};
 
-export default exec;
+export { Docker_client }
