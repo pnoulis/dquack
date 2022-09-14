@@ -1,22 +1,22 @@
 import Router from '@koa/router';
-import list from './service/list.js';
-import touch from './service/touch.js';
-import start from './service/start.js';
-import stop from './service/stop.js';
+import service_router from './service/routes.js';
 
-const router = new Router();
+const misc_router = new Router();
 
-router.get('/services', async (ctx, next) => {
-    ctx.response.body = await list();
-});
-router.get('/service/:id', async (ctx, next) => {
-    ctx.response.body = await touch(ctx.params.id);
-});
-router.post('/service/:id', async (ctx, next) => {
-    ctx.response.body = start(ctx.params.id);
-});
-router.delete('/service/:id', async (ctx, next) => {
-    ctx.response.body = stop(ctx.params.id);
+misc_router.get('/', async (ctx, next) => {
+    const routes = [];
+    service_router.stack.forEach(route => routes.push(route.path));
+    ctx.response.body = routes;
 });
 
-export default router;
+function registerRoutes(app) {
+    app.use(
+        misc_router.routes(),
+        misc_router.allowedMethods(),
+    ).use(
+        service_router.routes(),
+        service_router.allowedMethods(),
+    )
+}
+
+export default registerRoutes;

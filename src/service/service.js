@@ -1,5 +1,4 @@
 import { Asset, Image, Container } from './docker.js';
-export default Service;
 
 function Service(user, name) {
   this.user = user;
@@ -25,3 +24,4 @@ Service.prototype.start = function () {
 }
 Service.prototype.stop = function () {
 }
+export default Service;
