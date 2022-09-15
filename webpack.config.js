@@ -24,7 +24,7 @@ export default {
       watch: resolve(projectRoot, 'build'),
       runOnChangeOnly: false,
       events: {
-        start: "sleep 3; dquack.sh 2>&1"
+        start: "npm run client -- 1"
       },
       env: {
         NODE_ENV: 'development',

@@ -16,15 +16,18 @@
     "current node"
   ],
   "scripts": {
-    "test": "source ./scripts/dotenv.sh && dquack.sh",
-    "watch": "source ./scripts/dotenv.sh && webpack --watch --config webpack.config.js",
-    "build": "source ./scripts/dotenv.sh && webpack --config webpack.config.js && node ./build/main.bundle.cjs"
+    "serve": "source ./scripts/dotenv.sh && node ./build/main.bundle.cjs",
+    "client": "source ./scripts/dotenv.sh && ./tests/routes.sh 2>&1",
+    "build": "source ./scripts/dotenv.sh && webpack",
+    "build:watch": "source ./scripts/dotenv.sh && webpack --watch",
+    "build:run": "npm-run-all build -p serve 'client -- 1' --race"
   },
   "devDependencies": {
     "browserslist": "^4.21.3",
     "copy-webpack-plugin": "^11.0.0",
     "koa-json": "^2.0.2",
     "nodemon-webpack-plugin": "^4.8.1",
+    "npm-run-all": "^4.1.5",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   },
