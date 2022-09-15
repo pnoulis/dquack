@@ -2,9 +2,9 @@
  * Module dependencies
  */
 
-function Docker_client() {
+function DockerClient() {
 };
-Docker_client.prototype.exec = async function runADockerCommand(...args) {
+DockerClient.prototype.exec = async function runADockerCommand(...args) {
 };
 
-export { Docker_client }
+export { DockerClient }

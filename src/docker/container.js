@@ -1,9 +1,9 @@
 /**
  * Module dependencies
  */
-import { Docker_client } from './utils.js';
+import { DockerClient } from './utils.js';
 
-Object.setPrototypeOf(Container.prototype, Docker_client.prototype);
+Object.setPrototypeOf(Container.prototype, DockerClient.prototype);
 
 function Container() {
 }

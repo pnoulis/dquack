@@ -4,15 +4,15 @@
 
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { Docker_client } from './utils.js';
+import { DockerClient } from './utils.js';
 import { config } from '../utils.js';
 
 const PATH_ASSETS = config.assets;
 
-Object.setPrototypeOf(Asset.prototype, Docker_client);
+Object.setPrototypeOf(Asset.prototype, DockerClient);
 
-function Asset(service_name, path) {
-  this.ID = service_name;
+function Asset(serviceName, path) {
+  this.ID = serviceName;
   this.path = path;
 }
 Asset.prototype.resolve = async function (service) {

@@ -1,12 +1,12 @@
 /**
  * Module dependencies
  */
-import { Docker_client } from './utils.js';
+import { DockerClient } from './utils.js';
 import { config } from '../utils.js';
 
 const BASE_REPOSITORY = config.repositories;
 
-Object.setPrototypeOf(Image.prototype, Docker_client.prototype);
+Object.setPrototypeOf(Image.prototype, DockerClient.prototype);
 
 function Image(name) {
   this.tag = '';
