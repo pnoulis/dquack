@@ -1,6 +1,5 @@
 import { resolve, parse } from 'node:path';
 import NodemonPlugin from 'nodemon-webpack-plugin';
-import DotenvPlugin from 'dotenv-webpack';
 import CopyPlugin from 'copy-webpack-plugin';
 
 const projectRoot = parse(new URL(import.meta.url).pathname).dir
@@ -20,16 +19,6 @@ export default {
     preferRelative: false
   },
   plugins: [
-    new DotenvPlugin({
-      // 1st be safe
-      safe: resolve(projectRoot, 'config', '.env.example'),
-      // 2nd load defaults
-      defaults: resolve(projectRoot, 'config', '.env.dev.defaults'),
-      // 3rd load secrets
-      path: resolve(projectRoot, 'config', '.env.dev'),
-      // 4th CL arguments trample all
-      systemvars: true
-    }),
     new NodemonPlugin({
       script: resolve(projectRoot, 'build', 'main.bundle.cjs'),
       watch: resolve(projectRoot, 'build'),

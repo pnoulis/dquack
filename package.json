@@ -16,14 +16,13 @@
     "current node"
   ],
   "scripts": {
-    "test": "PATH=\"$HOME/projects/dquack-client/src:$PATH\" client.sh",
-    "watch": "NODE_ENV=development PATH=\"$HOME/projects/dquack-client/src:$PATH\" webpack --watch --config webpack.config.js",
-    "build": "NODE_ENV=development webpack --config webpack.config.js && node ./build/main.bundle.cjs"
+    "test": "source ./scripts/dotenv.sh && dquack.sh",
+    "watch": "source ./scripts/dotenv.sh && webpack --watch --config webpack.config.js",
+    "build": "source ./scripts/dotenv.sh && webpack --config webpack.config.js && node ./build/main.bundle.cjs"
   },
   "devDependencies": {
     "browserslist": "^4.21.3",
     "copy-webpack-plugin": "^11.0.0",
-    "dotenv-webpack": "^8.0.1",
     "koa-json": "^2.0.2",
     "nodemon-webpack-plugin": "^4.8.1",
     "webpack": "^5.74.0",

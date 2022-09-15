@@ -7,7 +7,6 @@
 # variables for any environment; (dev | prod | ...)
 # .*.defaults .*.example are tracked
 .env*
-!.env.example
 # tmp for experients
 /tmp/*
 !/tmp/.gitkeep
