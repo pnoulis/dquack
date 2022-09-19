@@ -2,7 +2,7 @@
  * Module dependencies
  */
 import Router from '@koa/router';
-import Service from './service.js';
+import Service from '../service/service.js';
 
 const router = new Router();
 router.use(async (ctx, next) => {

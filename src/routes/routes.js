@@ -1,5 +1,8 @@
+/**
+ * Module dependencies
+ */
 import Router from '@koa/router';
-import serviceRouter from './service/routes.js';
+import serviceRouter from './service.js';
 
 const miscRouter = new Router();
 

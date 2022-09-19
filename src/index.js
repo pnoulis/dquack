@@ -1,6 +1,6 @@
 import Koa from 'koa';
 import koaBody from 'koa-bodyparser';
-import routes from './routes.js';
+import routes from './routes/routes.js';
 
 const app = new Koa();
 
