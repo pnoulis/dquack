@@ -7,7 +7,7 @@ fi
 SERVER='localhost:8080'
 USER='pavlos'
 APP_NAME='app_name'
-aContainer='mssql_t2019'
+aContainer='bratnet%2Fmssql:2019'
 data='{
   "custom_settings": "pavlos"
   }'
@@ -25,7 +25,7 @@ function listServices() {
 # Params
 # @data
 # @serviceID
-function getService() {
+function procureService() {
   curl \
     --silent \
     --request 'GET' \
@@ -38,7 +38,7 @@ function getService() {
 # Params
 # @data
 # @serviceID
-function postService() {
+function startService() {
   curl \
     --silent \
     --request 'POST' \
@@ -52,7 +52,7 @@ function postService() {
 # Params
 # @data
 # @serviceID
-function deleteService() {
+function stopService() {
   curl \
     --silent \
     --request 'DELETE' \
@@ -64,6 +64,6 @@ function deleteService() {
 }
 
 listServices "$data" "$aContainer"
-getService "$data" "$aContainer"
-postService "$data" "$aContainer"
-deleteService "$data" "$aContainer"
+procureService "$data" "$aContainer"
+startService "$data" "$aContainer"
+stopService "$data" "$aContainer"

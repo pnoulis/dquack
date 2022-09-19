@@ -17,19 +17,15 @@ cd "$SOURCE_DIR"
 
 case $OPERATION in
 serve)
-  echo serve
   node ./build/main.bundle.cjs
   ;;
 client)
-  echo client
   ./tests/routes.sh
   ;;
 build)
-  echo build
   webpack
   ;;
 watch)
-  echo watch
   kill $(pgrep -f main.bundle.cjs)
   kill $(pgrep webpack)
   {
@@ -40,7 +36,6 @@ watch)
   tail -f var/out.log
   ;;
 run)
-  echo run
   kill $(pgrep -f main.bundle.cjs)
   kill $(pgrep webpack)
   {

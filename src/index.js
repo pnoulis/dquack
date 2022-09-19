@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(PrettyJson({ pretty: true, spaces: 2 }));
 }
 app.use(async function(ctx, next) {
-  console.log(ctx.href);
+  console.log(ctx.method + ' : ' + ctx.href);
   await next();
 });
 routes(app);
