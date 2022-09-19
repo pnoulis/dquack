@@ -1,5 +1,4 @@
 import { resolve, parse } from 'node:path';
-import NodemonPlugin from 'nodemon-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 
 const projectRoot = parse(new URL(import.meta.url).pathname).dir
@@ -19,17 +18,6 @@ export default {
     preferRelative: false
   },
   plugins: [
-    new NodemonPlugin({
-      script: resolve(projectRoot, 'build', 'main.bundle.cjs'),
-      watch: resolve(projectRoot, 'build'),
-      runOnChangeOnly: false,
-      events: {
-        start: "npm run client -- 1"
-      },
-      env: {
-        NODE_ENV: 'development',
-      }
-    }),
     new CopyPlugin({
       patterns: [
         { from: resolve(projectRoot, 'assets', 'services'), to: resolve(projectRoot, 'build', 'assets', 'services') }

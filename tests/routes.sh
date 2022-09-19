@@ -14,6 +14,7 @@ data='{
 
 function listServices() {
   curl \
+    --silent \
     --request 'GET' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --header 'Connection: close' \
@@ -26,6 +27,7 @@ function listServices() {
 # @serviceID
 function getService() {
   curl \
+    --silent \
     --request 'GET' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --header 'Connection: close' \
@@ -38,6 +40,7 @@ function getService() {
 # @serviceID
 function postService() {
   curl \
+    --silent \
     --request 'POST' \
     --header 'Content-Type: application/json' \
     --header 'Connection: close' \
@@ -51,6 +54,7 @@ function postService() {
 # @serviceID
 function deleteService() {
   curl \
+    --silent \
     --request 'DELETE' \
     --header 'Content-Type: application/json' \
     --header 'Connection: close' \
