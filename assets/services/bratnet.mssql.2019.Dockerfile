@@ -2,4 +2,5 @@ FROM mcr.microsoft.com/mssql/server:2019-latest
 EXPOSE 1433
 ENV ACCEPT_EULA="Y"
 ENV MSSQL_PID="Developer"
-ENV MSSQL_SA_PASSWORD="123%aoeuI"
+ENV MSSQL_USER="SA"
+ENV MSSQL_SA_PASSWORD="Pavlos1993"
