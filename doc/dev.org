@@ -1,3 +1,96 @@
 * procure
+** list all image instances of a service
+docker image ls --quiet --filter "reference=dquack/<repository>/<service>"
+docker images --quiet --filter "reference=dquack/<repository>/<service>"
+
+** error cases
+*** trying to remove an image while it is being referenced by containers
+GET :
+http://localhost:8080/service/bratnet%2Fmssql:2019?user=pavlos&app=app_name
+Error response from daemon: conflict: unable to remove repository reference
+"bratnet/mssql:2019" (must force) - container a7b84bdb7150 is using its
+referenced image 46946236b211
+
+Occurs when:
+Image wants to build a new image because the referenced asset has
+been modified since the image was last built but it cannot because thhe stale
+image is referenced by running containers.
+
+**** Solution #1
+on each procurement request try and remove all image instances of the requested
+service. those that have not been removed are being referenced by running
+containers. build a new image where the tag is the Nth instance. The Nth
+instance = Ninstances + 1
+
+**** Solution #2
+Instead of acting in a sweeping manner like solution #1 behave
+in a much more controlled way.
+
+check if the image exists.
+If Not build it; no removal of any previous instances required.
+If it does exist; check if it is stale.
+If it is not stale then return that instance; no need to build any new
+If it is stale create Nth instance and try and remove previous ones.
 * start
 * stop
+* container running mssql in windows 10 through wsl2
+standard mssql *host* port: 1433
+standard mssql *container* port: 1433
+docker run usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+The service within the docker container also exposes port 1433
+
+ENV MSSQL_SA_PASSWORD="Pavlos1993"
+** connect to the container
+docker exec -it <container name|ID> /bin/bash
+** check databases
+select name
+from sys.databases;
+GO
+** using sqlcmd to connect to the container from any host
+sqlcmd -S localhost,51433 -U sa -P Pavlos1993
+
+the server string may be of the form:
+host[\instance][,port]
+
+the host is either:
+an ip address
+a host name
+
+** options
+--attach t
+--detach d
+--interactive i
+--publish p
+--publish-all P
+** container config #1
+*** behavior
+run container in the foreground
+attaches stdin to the containers std*
+maps ports
+run sql server
+*** command
+docker run \
+--publish 51433:1433 \
+--attach stdin \
+--interactive \
+bratnet/mssql:2019
+** contaienr config #2
+*** behavior
+runs container in the background
+map ports
+run sql server
+*** command
+docker run \
+--detach
+--publish 51433:1433 \
+bratnet/mssql:2019
+
+
+* glossary
+** image instance
+Multiple images that reference the same dockerfile but different versions of it
+are *instances* of the same dockerfile.
+** stale image
+An instance of an image that references a dockerfile version that has been
+superseded by a newer one.

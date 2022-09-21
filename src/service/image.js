@@ -21,7 +21,7 @@ Image.prototype.resolve = async function (service) {
   }
   const { err, data } = await this.buildImage(service.asset.path);
   if (err) return null;
-  // a side effect of shouldBuildImage is that it extracts the 
+  // a side effect of shouldBuildImage is that it extracts the
   // ID and the buildTime off the image
   if (!await this.shouldBuildImage(service)) {
     return new Image(this.name, this.ID, this.buildTime)
