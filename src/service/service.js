@@ -8,16 +8,17 @@ import Container from './container.js';
 function Service(user, app) {
   this.user = user;
   this.app = app;
+  this.name = '';
 }
 
 Service.prototype.resolve = async function () {
   this.asset = await Asset.prototype.resolve(this);
-  this.image = await Image.prototype.resolve(this);
-  this.container = await Container.prototype.resolve(this);
+  //this.image = await Image.prototype.resolve(this);
+  //this.container = await Container.prototype.resolve(this);
   return this;
 }
-Service.prototype.ls = async function () {
-  return Asset.prototype.ls();
+Service.prototype.ls = function () {
+  return Asset.prototype.ls(true);
 }
 Service.prototype.procure = function (service) {
   this.name = service;

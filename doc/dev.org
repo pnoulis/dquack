@@ -22,6 +22,9 @@ service. those that have not been removed are being referenced by running
 containers. build a new image where the tag is the Nth instance. The Nth
 instance = Ninstances + 1
 
+Which leads to a naming problem. The Nth + 1 instance may not be given a name
+equal to the length of instances because that number may already be taken.
+
 **** Solution #2
 Instead of acting in a sweeping manner like solution #1 behave
 in a much more controlled way.
@@ -86,11 +89,85 @@ docker run \
 --publish 51433:1433 \
 bratnet/mssql:2019
 
+* Service
+** Selecting a service
+One may list the service through the url:
+get:dquack/service
+get:dquack/service/
+
+The services returned will be of the form:
+<service.name>/<service.tag>
+
+* Assets
+** layout of the dockerfile
+An asset that is going to be used by dquack must conform to these 2 rules.
+
+1. An asset must not derive an image from another asset.
+2. The following metadata must be present at the dockerfile
+   service.author="" 
+   service.name="user defined name for the service" 
+   service.tag=""
+   service.upstream.service="the subdomain of the upstream image" 
+   service.upstream.repositroy="the domain of the upstream image"
+   service.upstream.version="version if any" 
+   service.upstream.tag="upstream tag"
+  
+Preferably one may use dquack to provide a Dockerfile template.
+** Naming convention
+An asset's name must conform to the form:
+<service.author>.<service.name>.<service.tag>.Dockerfile
+(part.part.part.part)
+
+If it does not then the asset shall be rejected.
+
+If the constituent parts of a name contain any special character
+other than a [ _, - ] they will be replaced by an underscore [ _ ].
+
+Given the following metadata found within an asset:
+
+service.author="master"
+service.name="mssql"
+service.tag="2019-latest"
+
+One should produce the following filename:
+
+master.mssql.2019-latest.Dockerfile
+** Mapping a user requested service to an asset
+A user requests a service through a service name.
+A user may request to to list the available assets through the url:
+get:dquack/service
+get:dquack/service/
+
+Each asset will be listed in the response after naming transformation has taken
+place.
+
+Each asset name is mapped by applying the following procedure:
+
+extract the ${service.name}
+extract the ${service.tag}
+join them together using [ : ] (colon).
+
+For example the asset:
+mssql.2019-latest.Dockerfile
+will be mapped to:
+mssql:2019-latest
+
+So that a user may reference an asset:
+mssql.2019-latest.Dockerfile
+by requesting:
+mssql:2019-latest
+ 
+** pushing assets to dquack
+** pulling assets from dquack
+** listing assets
+* Images
 
 * glossary
-** image instance
+** Asset
+A Dockerfile from which image instances are based.
+** Image instance
 Multiple images that reference the same dockerfile but different versions of it
 are *instances* of the same dockerfile.
-** stale image
+** Stale image
 An instance of an image that references a dockerfile version that has been
 superseded by a newer one.

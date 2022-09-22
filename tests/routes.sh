@@ -4,10 +4,20 @@ if [ "$1" ]; then
   sleep $1
 fi
 
+#
+# url encoding table:
+# https://www.w3schools.com/tags/ref_urlencode.ASP
+#
+# quick ref:
+# / %2F
+# - %2D
+# . %2E
+# : %3A
+
 SERVER='localhost:8080'
 USER='pavlos'
 APP_NAME='app_name'
-aContainer='bratnet%2Fmssql:2019'
+aContainer='mssql%3A2019%2Dlatest'
 data='{
   "custom_settings": "pavlos"
   }'

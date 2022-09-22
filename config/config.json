@@ -1,4 +1,7 @@
 {
-  "repositories": "bratnet/mssql",
+  "server": {
+    "host": "localhost",
+    "port": "8080",
+  }
   "assets": "./assets/services"
 }

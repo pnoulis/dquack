@@ -13,6 +13,11 @@ function Image(name, ID, buildTime) {
   this.ID = ID;
   this.buildTime = buildTime;
 }
+/**
+ *
+ * @param { Object } service { name: 'dquack/mssql:2019' }
+ * @returns {}
+ */
 Image.prototype.resolve = async function (service) {
   if (!service.asset) return null;
   this.name = service.name;
@@ -55,6 +60,39 @@ Image.prototype.buildImage = function (asset) {
 Image.prototype.rmImage = function () {
   const command = `image rm ${this.name}`;
   return this.exec(command);
+}
+
+Image.prototype.getInstances = async function () {
+  const command = "image ls --quiet --filter 'reference=dquack/*/*";
+  const { err, data } = await DockerClient.prototype.exec(command);
+  if (err) throw new Error(err);
+  else if (!data) return [];
+  else return data.split('\n');
+}
+
+/**
+ *
+ * @param { array } instances
+ * @returns { array } deleted instances
+ * @throws { Error } in case of unexpectedError
+ */
+Image.prototype.rmStaleInstances = async function(instances) {
+  const command = `image rm ${instances.toString().replace(/,/g, ' ')}`;
+  const { err, data } = await DockerClient.prototype.exec(command);
+  if (err) {
+    const unexpectedErrors = err.match(!/^.*image is referenced in multiple repositories$/gm) || [];
+    if (unexpectedErrors.length > 0) {
+      throw new Error(unexpectedErrors.join('\n'));
+    } else {
+      return instances.filter($_ => new RegExp($_).test(data));
+    }
+  } else if (!data) {
+    return [];
+  } else {
+    return instances.filter($_ => new RegExp($_).test(data));
+  }
+}
+Image.prototype.setName = function() {
 }
 export default Image;
 
