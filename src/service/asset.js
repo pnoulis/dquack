@@ -20,8 +20,8 @@ function Asset(name) {
  * @returns { promise }
  */
 Asset.prototype.resolve = async function (service) {
-  const dir = await Asset.prototype.ls(false);
-  let asset = this.map(null, service.name);
+  const dir = await Asset.prototype.ls();
+  let asset = service.map(service.name);
   if (!dir.includes(asset)) return null;
   asset = new Asset(asset);
   asset.mTime  = await asset.getMTime();
@@ -35,30 +35,8 @@ Asset.prototype.resolve = async function (service) {
  * a service name
  * @returns { promise }
  */
-Asset.prototype.ls = async function listAllAvailableAssets(map) {
-  if (!map) return readdir(PATH_ASSETS);
-  const dir = await readdir(PATH_ASSETS);
-  return dir.map(asset => Asset.prototype.map(asset, null));
-}
-
-/**
- * Map asset to service or service to asset.
- *
- * @param { string } asset <service.name>.<service.upstream.tag>.Dockerfile
- * @param { string } service <service.name>/<service.upstream.tap>
- * @returns { string } mapped entity
- * @throws { Error }
- */
-Asset.prototype.map = function(asset, service) {
-  if (asset) { // map to service
-    asset = asset.split('.').slice(0, -1);
-    return asset.length < 2 ? asset[0] : `${asset[0]}:${asset[1]}`;
-  } else if (service) { // map to asset
-    service = service.split(':');
-    return `${service[0]}.${service[1]}.Dockerfile`;
-  } else {
-    throw new Error('Insufficient arguments');
-  }
+Asset.prototype.ls = function listAllAvailableAssets(map) {
+  return readdir(PATH_ASSETS);
 }
 
 /**

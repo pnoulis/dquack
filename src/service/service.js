@@ -17,8 +17,9 @@ Service.prototype.resolve = async function () {
   //this.container = await Container.prototype.resolve(this);
   return this;
 }
-Service.prototype.ls = function () {
-  return Asset.prototype.ls(true);
+Service.prototype.ls = async function () {
+  const dir = await Asset.prototype.ls();
+  return dir.map(asset => this.map(null, asset));
 }
 Service.prototype.procure = function (service) {
   this.name = service;
@@ -32,4 +33,25 @@ Service.prototype.stop = function (service, settings) {
   this.settings = settings;
   return this;
 }
+
+/**
+ * Map asset to service or service to asset.
+ *
+ * @param { string } asset <service.name>.<service.upstream.tag>.Dockerfile
+ * @param { string } service <service.name>/<service.upstream.tap>
+ * @returns { string } mapped entity
+ * @throws { Error }
+ */
+Service.prototype.map = function(service, asset) {
+  if (asset) { // map to service
+    asset = asset.split('.').slice(0, -1);
+    return asset.length < 2 ? asset[0] : `${asset[0]}:${asset[1]}`;
+  } else if (service) { // map to asset
+    service = service.split(':');
+    return `${service[0]}.${service[1]}.Dockerfile`;
+  } else {
+    throw new Error('Insufficient arguments');
+  }
+}
+
 export default Service;
