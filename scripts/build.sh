@@ -30,7 +30,6 @@ watch)
   kill $(pgrep webpack)
   {
     webpack --watch </dev/null &
-    sleep 3
     npx nodemon ./build/main.bundle.cjs
   } &>var/out.log &
   tail -f var/out.log

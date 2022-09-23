@@ -2,7 +2,7 @@
  * Module dependencies
  */
 import { DockerClient } from './utils.js';
-import { config, UtilsTime } from '../utils.js';
+import { config, utils } from '../utils.js';
 
 const BASE_REPOSITORY = config.repositories;
 
@@ -44,8 +44,8 @@ Image.prototype.shouldBuildImage = async function (service) {
   if (err) return true;  // No such image found; should build.
   const parts = data.split('\n').slice(0, 2);
   this.ID = parts[0];
-  this.buildTime = UtilsTime.prototype.rmFractionalSecs(parts[1]);
-  if (UtilsTime.prototype.greaterThan(service.asset.writeTime, this.buildTime)) {
+  this.buildTime = utils.time.prototype.rmFractionalSecs(parts[1]);
+  if (utils.time.greaterThan(service.asset.writeTime, this.buildTime)) {
     // Asset modified since last build; should build.
     const { err } = await this.rmImage(); // remove previous image
     if (err) throw new Error(err);

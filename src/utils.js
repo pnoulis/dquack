@@ -4,7 +4,33 @@ function log(message) {
   console.log(message);
 }
 
-function UtilsTime() {
+/**
+ *  UTILS
+ */
+function Utils() {
+}
+
+Utils.prototype.translate = function (entity) {
+  return {
+    // service to asset
+    service: (entity) => {
+    },
+    // asset to service
+    asset: (entity) => {
+    },
+    // entity to image
+    image: (entity) => {
+    },
+    // entity to container
+    container: (entity) => {
+    },
+  };
+}
+
+/**
+ *  TIME UTILS
+ */
+function TimeUtils() {
 }
 
 /**
@@ -13,19 +39,23 @@ function UtilsTime() {
  * the result
  * @param {string} datetime
  */
-UtilsTime.prototype.rmFractionalSecs = function removeFractionalSeconds(datetime) {
+TimeUtils.prototype.rmFractionalSecs = function removeFractionalSeconds(datetime) {
   if (typeof datetime === 'object') {
     datetime = datetime.toJSON();
   }
   const hasFractionalSecs = datetime.search('\\..*Z$');
   return hasFractionalSecs < 0 ? datetime : datetime.substring(0, hasFractionalSecs) + 'Z';
 }
-UtilsTime.prototype.greaterThan = function compareThisDateToArgDate(datetimeA, datetimeB) {
+TimeUtils.prototype.greaterThan = function compareThisDateToArgDate(datetimeA, datetimeB) {
   datetimeA = new Date(datetimeA).getTime();
   datetimeB = new Date(datetimeB).getTime();
   return datetimeA > datetimeB ? true : false;
 }
 
+
+/**
+ *  REGEX UTILS
+ */
 
 /**
  * A not exchaustive list of regex syntax for the javascript engine
@@ -52,11 +82,13 @@ UtilsTime.prototype.greaterThan = function compareThisDateToArgDate(datetimeA, d
  * The regex constructor
  * new RegExp('regex', 'flags');
  */
-const reTokens = {
-}
+
+
+const utils = new Utils();
+utils.time = new TimeUtils();
 
 export {
   config,
   log,
-  UtilsTime
+  utils
 }

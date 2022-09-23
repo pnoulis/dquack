@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/mssql/server:2019-latest
 # Metadata
 ## ------
 LABEL service.author="pavlos" \
-LABEL service.name="mssql/service" \
+LABEL service.name="mssql_server/2019" \
 LABEL service.tag="0.1" \
 LABEL service.upstream.service="mssql/server" \
 LABEL service.upstream.repositroy="mcr.microsoft.com" \

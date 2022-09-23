@@ -1,8 +1,7 @@
 /**
  * Module dependencies
  */
-import Asset from './asset.js';
-import Image from './image.js';
+import Asset from '../assets/asset.js';
 import Container from './container.js';
 
 function Service(user, app) {
@@ -17,18 +16,26 @@ Service.prototype.resolve = async function () {
   //this.container = await Container.prototype.resolve(this);
   return this;
 }
+
 Service.prototype.ls = async function () {
   const dir = await Asset.prototype.ls();
   return dir.map(asset => this.map(null, asset));
 }
+
+Service.prototype.inspect = async function() {
+  return {};
+}
+
 Service.prototype.procure = function (service) {
   this.name = service;
   return this.resolve();
 }
+
 Service.prototype.start = function (service, settings) {
   this.settings = settings;
   return this;
 }
+
 Service.prototype.stop = function (service, settings) {
   this.settings = settings;
   return this;

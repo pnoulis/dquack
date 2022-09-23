@@ -4,7 +4,7 @@
 
 import { readdir, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { config, UtilsTime } from '../utils.js';
+import { config, utils } from '../utils.js';
 
 const PATH_ASSETS = config.assets;
 
@@ -15,6 +15,7 @@ function Asset(name) {
 }
 
 /**
+ * Instantiate an asset.
  *
  * @param {service} service
  * @returns { promise }
@@ -29,7 +30,7 @@ Asset.prototype.resolve = async function (service) {
 }
 
 /**
- * List assets found within designated paths
+ * List available assets.
  *
  * @param { boolean } map if true listing should map each asset to a
  * a service name
@@ -39,15 +40,26 @@ Asset.prototype.ls = function listAllAvailableAssets(map) {
   return readdir(PATH_ASSETS);
 }
 
+Asset.prototype.write = function appendOrWriteMode(append) {
+  return {};
+}
+
+Asset.prototype.cat = function returnBufferOrString(buffer) {
+  return {};
+}
+
+Asset.prototype.rm = function deletesAsset() {
+  return {};
+}
+
 /**
- * Datetimes formated against RFC3339 may include fractional seconds for extreme
- * precision which is an overkill for dquack. This function removes them.
+ * Retrieve the modification time of the asset.
  *
  * @returns { string }
  */
 Asset.prototype.getMTime = async function getModificationTime() {
   let { mtime } = await stat(this.path);
-  return UtilsTime.prototype.rmFractionalSecs(mtime);
+  return utils.rmFractionalSecs(mtime);
 }
 
 export default Asset;

@@ -100,23 +100,33 @@ The services returned will be of the form:
 
 * Assets
 ** layout of the dockerfile
-An asset that is going to be used by dquack must conform to these 2 rules.
+A Dockerfile that is pushed into dquack must conform to these 3 rules to qualify
+into an asset.
 
-1. An asset must not derive an image from another asset.
+1. An asset must not be derived from another asset.
 2. The following metadata must be present at the dockerfile
    service.author="" 
-   service.name="user defined name for the service" 
-   service.tag=""
-   service.upstream.service="the subdomain of the upstream image" 
+   service.name="name/version[_arch]" 
+   service.tag="should identify the version of the asset not the upstream service"
+   service.upstream.service="the upstream service" 
    service.upstream.repositroy="the domain of the upstream image"
    service.upstream.version="version if any" 
+   service.upstream.arch="architecture of the upstream version"
    service.upstream.tag="upstream tag"
+3. It must successfully build.
   
 Preferably one may use dquack to provide a Dockerfile template.
+** Pushing a dockerfile into dquack
+This is done through a client.
+
+If the dockerfile fails to conform to the standards it will be rejected.
+*** TODO client can transit files or contents of files to dquack
+*** TODO server can successfully receive a dockerfile either as a file or content
+
 ** Naming convention
-An asset's name must conform to the form:
+An asset's name is derived from metadata in must conform to the form:
 <service.author>.<service.name>.<service.tag>.Dockerfile
-(part.part.part.part)
+(part.part.part.Dockerfile)
 
 If it does not then the asset shall be rejected.
 
@@ -126,12 +136,19 @@ other than a [ _, - ] they will be replaced by an underscore [ _ ].
 Given the following metadata found within an asset:
 
 service.author="master"
-service.name="mssql"
-service.tag="2019-latest"
+service.name="mssql_server/2019"
+service.tag="0.1"
 
 One should produce the following filename:
 
-master.mssql.2019-latest.Dockerfile
+master.mssql_server-201$.01.Dockerfile
+
+*** <service.name>
+The service.name should uniquely identify the service being provided including
+version and possibly architecture.
+
+name/version[_arch]
+
 ** Mapping a user requested service to an asset
 A user requests a service through a service name.
 A user may request to to list the available assets through the url:
@@ -161,6 +178,8 @@ mssql:2019-latest
 ** pulling assets from dquack
 ** listing assets
 * Images
+* User stories
+** User requests a service x
 
 * glossary
 ** Asset
