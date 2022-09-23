@@ -8,6 +8,8 @@ ENV_DIR="${SOURCE_DIR}/config"
 ENVAR_RE='^\w+=\w+$'
 ENV_EXAMPLE="${ENV_DIR}/env.example"
 env="${ENV_DIR}/.env.dev"
+export PATH=$SOURCE_DIR/tests:$PATH
+alias dquack=routes.sh
 
 set -o allexport
 source "$ENV_EXAMPLE"
