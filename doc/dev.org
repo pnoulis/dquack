@@ -99,7 +99,13 @@ The services returned will be of the form:
 <service.name>/<service.tag>
 
 * Assets
-** layout of the dockerfile
+** What is an asset
+Dquack abstracts Dockerfiles into Assets. An Asset is a Dockerfile that has
+passed validation tests and hence forth may be treated as such. A Service may
+only be procured if it is supported by a valid Asset.
+
+** layout of a conformant Dockerfile
+
 A Dockerfile that is pushed into dquack must conform to these 3 rules to qualify
 into an asset.
 
@@ -109,22 +115,42 @@ into an asset.
    service.name="name/version[_arch]" 
    service.tag="should identify the version of the asset not the upstream service"
    service.upstream.service="the upstream service" 
-   service.upstream.repositroy="the domain of the upstream image"
+   service.upstream.repository="the domain of the upstream image"
    service.upstream.version="version if any" 
    service.upstream.arch="architecture of the upstream version"
    service.upstream.tag="upstream tag"
 3. It must successfully build.
   
 Preferably one may use dquack to provide a Dockerfile template.
+*** service.author
+A string [a-zA-Z]
+*** service.name
+The service.name should uniquely identify the service being provided including
+version and possibly architecture.
+name/version[_arch]
+*** service.tag
+A string [a-zA-Z0-9-_.]
+*** service.upstream.service
+A string [a-Z-_./]
+*** service.upstream.repository
+*** service.upstream.version
+*** service.upstream.arch
+*** service.upstream.tag
+
 ** Pushing a dockerfile into dquack
 This is done through a client.
 
 If the dockerfile fails to conform to the standards it will be rejected.
-*** TODO client can transit files or contents of files to dquack
-*** TODO server can successfully receive a dockerfile either as a file or content
+*** DONE client may upload new assets
+CLOSED: [2022-09-25 Sun 17:02]
 
+*** DONE server can successfully receive a dockerfile either as a file or content
+CLOSED: [2022-09-25 Sun 17:01]
+
+*** TODO Server performs validations
+*** TODO Server understands how to append to an already created dockerfile
 ** Naming convention
-An asset's name is derived from metadata in must conform to the form:
+An asset's name is derived from metadata found within an uploaded Dockerfile.
 <service.author>.<service.name>.<service.tag>.Dockerfile
 (part.part.part.Dockerfile)
 

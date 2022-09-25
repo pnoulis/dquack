@@ -3,5 +3,7 @@
     "host": "localhost",
     "port": "8080"
   },
-  "assets": "./assets/services"
+  "assets": "./assets/services",
+  "cache": "./var",
+  "prefix": "dquack"
 }

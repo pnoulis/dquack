@@ -9,10 +9,11 @@ const BASE_REPOSITORY = config.repositories;
 Object.setPrototypeOf(Image.prototype, DockerClient.prototype);
 
 function Image(name, ID, buildTime) {
-  this.name = name;
-  this.ID = ID;
-  this.buildTime = buildTime;
+  this.name = name || '';
+  this.ID = ID || 0;
+  this.buildTime = buildTime || 0;
 }
+
 /**
  *
  * @param { Object } service { name: 'dquack/mssql:2019' }
@@ -53,9 +54,14 @@ Image.prototype.shouldBuildImage = async function (service) {
   }
   return false;
 }
-Image.prototype.buildImage = function (asset) {
+/**
+ *
+ * @param { string } asset An absolute path uniquely identifying an asset
+ * @returns { promise }
+ */
+Image.prototype.build = function (asset) {
   const command = `image build --quiet --tag ${this.name} - < ${asset}`;
-  return this.exec(command);
+  return utils.docker.exec(command, true);
 }
 Image.prototype.rmImage = function () {
   const command = `image rm ${this.name}`;

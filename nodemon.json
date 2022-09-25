@@ -2,6 +2,7 @@
   "verbose": true,
   "delay": "3000",
   "watch": [ "./build" ],
+  "ignore": ["*.org"],
    "events": {
      "start": "npm run client"
    }

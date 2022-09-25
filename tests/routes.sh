@@ -58,8 +58,12 @@
 # }
 
 
+NL=$'\n'
+BUFFER=
 SILENT=
-VERBOSE=
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+SOURCE_DIR=$(realpath ${SCRIPT_DIR}/..)
+VERBOSE="--verbose"
 SERVER='localhost:8080'
 USER='pavlos'
 APP_NAME='app_name'
@@ -137,6 +141,49 @@ function home() {
         "${SERVER}/"
 }
 
+function createAsset() {
+    while getopts 'f' opt; do
+        case $opt in
+            f)
+                BUFFER=$OPTARG
+                ;;
+            *)
+                echo usage
+                ;;
+        esac
+    done
+    shift $(($OPTIND - 1));
+
+    [[ -z "$BUFFER" ]] && {
+        cat "${SOURCE_DIR}/assets/templates/Dockerfile"
+        exit 0
+    }
+    curl \
+        ${SILENT} \
+        ${VERBOSE} \
+        --request 'POST' \
+        --header 'Content-Type: text/plain; charset=UTF-8' \
+        --header 'Connection: Close' \
+        --data "$BUFFER" \
+        "${SERVER}/assets"
+}
+
+
+function rmImages() {
+    docker image rm $(docker image ls --quiet --filter 'reference=dquack/*')
+}
+
+if [[ -p /dev/stdin ]]; then # pipe
+    while read -r stdin; do
+        BUFFER+="${stdin}${NL}"
+    done
+fi
+if [[ ! -t 0  && ! -p /dev/stdin ]]; then # redirection
+    while read -r stdin; do
+        BUFFER+="${stdin}${NL}"
+    done
+fi
+
 while getopts "asv" opt; do
     case "$opt" in
         a) # all
@@ -146,7 +193,7 @@ while getopts "asv" opt; do
             SILENT="--silent"
             ;;
         v)
-            VERBOSE='--verbose'
+            VERBOSE=''
             ;;
         *)
             echo "usage"

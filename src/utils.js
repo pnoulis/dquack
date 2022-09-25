@@ -1,4 +1,8 @@
+import { exec, execFile } from 'node:child_process';
+import { Buffer } from 'node:buffer';
+import { promisify } from 'node:util';
 import config from '../config/config.json' assert { type: 'json' };
+import { Sha256 } from '@aws-crypto/sha256-js';
 
 function log(message) {
   console.log(message);
@@ -25,6 +29,62 @@ Utils.prototype.translate = function (entity) {
     container: (entity) => {
     },
   };
+}
+
+Utils.prototype.truncateSHA256 = function(sha256) {
+  return sha256.replace('sha256', '').substring(0, 12);
+}
+
+/**
+ * Docker utils
+ *
+ */
+
+function DockerUtils() {
+  this.shell = promisify(exec);
+  this.noShell = promisify(execFile);
+}
+
+DockerUtils.prototype.exec = async function runADockerCommand(command, shell) {
+  try {
+    const { stdout, stderr } = shell
+          ? await this.shell('docker ' + command)
+          : await this.noShell('docker ' + command); // does not work yet
+    return {
+      data: Buffer.isBuffer(stdout) ? stdout.toString('utf-8').trim() : stdout.trim(),
+    };
+  } catch (err) {
+    //log(err.stderr);
+    // Commands which accept multiple arguments such as:
+    // docker image rm 1 2 3 ...
+    // will throw an error for each of the images that it could not
+    // delete but will write to sdtout those images that it could delete
+    // as such an 'error' is not strictly an error
+    return { err: err.stderr.trim(), data: err.stdout.trim() };
+  }
+}
+
+/**
+ * Crypto Utils
+ *
+ */
+
+function CryptoUtils() {
+}
+
+/**
+ * Produce a hash out of the contents of a file
+ * lib: https://github.com/aws/aws-sdk-js-crypto-helpers/tree/master/packages/sha256-js
+ * @param { string } buffer
+ * @returns { promise }
+ */
+CryptoUtils.prototype.makeChecksum = async function(buffer) {
+  let hash = new Sha256();
+  let tostr = '';
+  hash.update(buffer);
+  hash = await hash.digest();
+  hash.forEach($_ => tostr += $_.toString(16));
+  return tostr;
 }
 
 /**
@@ -85,7 +145,9 @@ TimeUtils.prototype.greaterThan = function compareThisDateToArgDate(datetimeA, d
 
 
 const utils = new Utils();
+utils.docker = new DockerUtils();
 utils.time = new TimeUtils();
+utils.crypto = new CryptoUtils();
 
 export {
   config,
