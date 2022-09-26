@@ -16,8 +16,8 @@ router.use(async (ctx, next) => {
 /**
  * List available assets
  *
- * GET host/assets
- * GET host/assets/
+ * GET host/assets[/]
+ * Content-Type: application/x-www-form-urlencoded
  */
 router.get('/assets', async (ctx, next) => {
   ctx.response.body = await ctx.state.asset.ls();
@@ -26,7 +26,8 @@ router.get('/assets', async (ctx, next) => {
 /**
  * Create a new asset
  *
- * POST text/plain host/assets body:data
+ * POST host/assets[/]
+ * Content-Type: text/plain
  */
 router.post('/assets', async (ctx, next) => {
   ctx.response.bdoy = await ctx.state.asset.write(ctx.request.body);
