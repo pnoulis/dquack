@@ -33,6 +33,10 @@ miscRouter.get('/', async (ctx, next) => {
   ctx.response.body = routes;
 });
 
+miscRouter.get('/test', async (ctx, next) => {
+  return ctx.response.body = 'test';
+})
+
 function registerRoutes(app) {
   app.use(
     miscRouter.routes(),

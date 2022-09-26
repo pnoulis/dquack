@@ -61,10 +61,12 @@
 NL=$'\n'
 BUFFER=
 SILENT=
+TEST=
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 SOURCE_DIR=$(realpath ${SCRIPT_DIR}/..)
 VERBOSE="--verbose"
 SERVER='localhost:8080'
+ROUTE=$SERVER
 USER='pavlos'
 APP_NAME='app_name'
 aContainer='mssql%3A2019%2Dlatest'
@@ -158,6 +160,11 @@ function createAsset() {
         cat "${SOURCE_DIR}/assets/templates/Dockerfile"
         exit 0
     }
+
+    [[ $TEST ]] && {
+        ROUTE+=/test
+    } || ROUTE+=/assets
+
     curl \
         ${SILENT} \
         ${VERBOSE} \
@@ -165,7 +172,7 @@ function createAsset() {
         --header 'Content-Type: text/plain; charset=UTF-8' \
         --header 'Connection: Close' \
         --data "$BUFFER" \
-        "${SERVER}/assets"
+        ${ROUTE}
 }
 
 
@@ -184,28 +191,31 @@ if [[ ! -t 0  && ! -p /dev/stdin ]]; then # redirection
     done
 fi
 
-while getopts "asv" opt; do
+while getopts "asvt" opt; do
     case "$opt" in
         a) # all
             echo "run all routes"
             ;;
-        s)
+        s) # silent
             SILENT="--silent"
             ;;
-        v)
+        v) # not verbose
             VERBOSE=''
+            ;;
+        t) # test run
+            TEST=0
             ;;
         *)
             echo "usage"
             ;;
     esac
 done
+shift $(($OPTIND - 1))
 
-shift $(($OPTIND - 1));
+subcommand="$1"
 
-route="$1";
-
-if [ ! -z "$route" ]; then
+if [ ! -z "$subcommand" ]; then
     [[ $OPTIND -eq 1 ]] && shift
-    "$route" "$@"
+    "$subcommand" "$@"
 fi
+
