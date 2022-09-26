@@ -33,8 +33,7 @@ watch)
   {
     webpack --watch </dev/null &
     npx nodemon ./build/main.bundle.cjs
-  } &>var/out.log &
-  tail -f var/out.log
+  } &
   ;;
 run)
   kill $(pgrep -f main.bundle.cjs)
@@ -44,8 +43,7 @@ run)
     node ./build/main.bundle.cjs </dev/null &
     sleep 2
     ./tests/routes.sh
-  } &>var/out.log &
-  tail -f var/out.log
+  } &
   ;;
 *)
   echo "usage"

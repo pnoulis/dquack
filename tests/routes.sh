@@ -66,11 +66,17 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 SOURCE_DIR=$(realpath ${SCRIPT_DIR}/..)
 VERBOSE="--verbose"
 SERVER='localhost:8080'
-ROUTE=$SERVER
 USER='pavlos'
 APP_NAME='app_name'
 QUERY_STRING='?user=pnoul&app=test_app'
 aContainer='mssql%3A2019%2Dlatest'
+ROUTE () {
+    ([[ $TEST ]] && {
+        echo ${SERVER}/test${QUERY_STRING}
+     }) || {
+        echo $SERVER$1$QUERY_STRING
+    }
+}
 data='{
   "custom_settings": "pavlos"
   }'
@@ -141,7 +147,7 @@ function home() {
         ${VERBOSE} \
         --request 'GET' \
         --header 'Connection: Close' \
-        "${SERVER}/"
+        $(ROUTE /)
 }
 
 function createAsset() {

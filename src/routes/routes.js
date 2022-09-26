@@ -1,9 +1,11 @@
 /**
  * Module dependencies
  */
+import chalk from 'chalk';
 import Router from '@koa/router';
 import serviceRouter from './service.js';
 import assetRouter from './asset.js';
+import { log } from '../utils.js';
 
 const miscRouter = new Router();
 
@@ -14,8 +16,9 @@ const attachSession = async (ctx, next) => {
 }
 
 const logRouteInformation = async (ctx, next) => {
-  console.log(`user: ${ctx.state.user}\tapp: ${ctx.state.app}`);
-  console.log(`${ctx.method}: ${ctx.href}`);
+  log.msg(`#puser:#p #g${ctx.state.user}#g
+#papp:#p #g${ctx.state.app}#g
+#p${ctx.method}:#p #g${ctx.href}#g`)
   await next();
 }
 

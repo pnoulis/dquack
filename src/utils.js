@@ -1,12 +1,29 @@
+import chalk from 'chalk';
 import { exec, execFile } from 'node:child_process';
 import { Buffer } from 'node:buffer';
 import { promisify } from 'node:util';
 import config from '../config/config.json' assert { type: 'json' };
 import { Sha256 } from '@aws-crypto/sha256-js';
 
-function log(message) {
-  console.log(message);
+
+function Log() {
+  this.re_color = /#([a-z]).+?#\1/g;
 }
+
+Log.prototype.msg = function (message) {
+  console.log(
+    message.replaceAll(this.re_color, this.colorMatch.bind(this))
+  );
+}
+
+Log.prototype.colorMatch = function (match, colorCode) {
+  return this[colorCode] ? this[colorCode](match.slice(2, -2)): match;
+}
+Log.prototype.r = chalk.bold.red; // red
+Log.prototype.g = chalk.bold.green; // green
+Log.prototype.b = chalk.bold.blue; // blue
+Log.prototype.p = chalk.bold.magenta // purple
+Log.prototype.y = chalk.bold.yellow; // yellow
 
 /**
  *  UTILS
@@ -148,6 +165,7 @@ const utils = new Utils();
 utils.docker = new DockerUtils();
 utils.time = new TimeUtils();
 utils.crypto = new CryptoUtils();
+const log = new Log();
 
 export {
   config,
