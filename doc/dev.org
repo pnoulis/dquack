@@ -103,9 +103,8 @@ The services returned will be of the form:
 Dquack abstracts Dockerfiles into Assets. An Asset is a Dockerfile that has
 passed validation tests and hence forth may be treated as such. A Service may
 only be procured if it is based on a valid Asset.
-
 ** layout of a conformant Dockerfile
-A Dockerfile that is pushed into dquack must conform to these 3 rules to qualify
+A Dockerfile that is pushed into dquack must conform to these 4 rules to qualify
 into an asset.
 
 1. An asset must not be derived from another asset.
@@ -113,7 +112,8 @@ into an asset.
    service.author=""
    service.name=""
    service.tag=""
-3. It must successfully build.
+3. The metadata must pass validation tests
+4. The dockerfile must successfully build.
   
 Preferably one may use dquack to provide a Dockerfile template.
 *** service.author

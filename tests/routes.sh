@@ -69,6 +69,7 @@ SERVER='localhost:8080'
 ROUTE=$SERVER
 USER='pavlos'
 APP_NAME='app_name'
+QUERY_STRING='?user=pnoul&app=test_app'
 aContainer='mssql%3A2019%2Dlatest'
 data='{
   "custom_settings": "pavlos"
@@ -172,7 +173,7 @@ function createAsset() {
         --header 'Content-Type: text/plain; charset=UTF-8' \
         --header 'Connection: Close' \
         --data "$BUFFER" \
-        ${ROUTE}
+        ${ROUTE}${QUERY_STRING}
 }
 
 

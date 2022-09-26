@@ -7,6 +7,18 @@ import assetRouter from './asset.js';
 
 const miscRouter = new Router();
 
+const attachSession = async (ctx, next) => {
+  ctx.state.user = ctx.query.user || '';
+  ctx.state.app = ctx.query.app || '';
+  await next();
+}
+
+const logRouteInformation = async (ctx, next) => {
+  console.log(`user: ${ctx.state.user}\tapp: ${ctx.state.app}`);
+  console.log(`${ctx.method}: ${ctx.href}`);
+  await next();
+}
+
 miscRouter.get('/', async (ctx, next) => {
   const routes = [];
   let method = '';
@@ -39,6 +51,10 @@ miscRouter.get('/test', async (ctx, next) => {
 
 function registerRoutes(app) {
   app.use(
+    attachSession
+  ).use(
+    logRouteInformation
+  ).use(
     miscRouter.routes(),
     miscRouter.allowedMethods(),
   ).use(
