@@ -7,23 +7,36 @@ import { Sha256 } from '@aws-crypto/sha256-js';
 
 
 function Log() {
-  this.re_color = /#([a-z]).+?#\1/g;
+  this.re_color = /#([a-zA-Z]).+?#\1/g;
+  this.re_cli_token = /[^\s'"]*(?:'.*?'|".*?"|`.*?`)*/g;
 }
-
 Log.prototype.msg = function (message) {
   console.log(
     message.replaceAll(this.re_color, this.colorMatch.bind(this))
   );
 }
-
+Log.prototype.fmt = function (message) {
+  const tokens = message.match(this.re_cli_token);
+  const colors = [ 'r', 'g', 'b', 'p', 'y' ];
+  const lenColors = colors.length;
+  tokens.forEach(($_, i) => {
+    tokens[i] = this[colors[i % lenColors]]($_);
+  })
+  console.log(...tokens);
+}
 Log.prototype.colorMatch = function (match, colorCode) {
   return this[colorCode] ? this[colorCode](match.slice(2, -2)): match;
 }
-Log.prototype.r = chalk.bold.red; // red
-Log.prototype.g = chalk.bold.green; // green
-Log.prototype.b = chalk.bold.blue; // blue
-Log.prototype.p = chalk.bold.magenta // purple
-Log.prototype.y = chalk.bold.yellow; // yellow
+Log.prototype.r = chalk.bold.red;
+Log.prototype.g = chalk.bold.green;
+Log.prototype.b = chalk.bold.blue;
+Log.prototype.p = chalk.bold.magenta;
+Log.prototype.y = chalk.bold.yellow;
+Log.prototype.R = chalk.red;
+Log.prototype.G = chalk.green;
+Log.prototype.B = chalk.blue;
+Log.prototype.P = chalk.magenta;
+Log.prototype.Y = chalk.yellow;
 
 /**
  *  UTILS

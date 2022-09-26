@@ -143,15 +143,13 @@ service.upstream.tag="upstream tag"
 ** Pushing a dockerfile into dquack
 *** Client
 #+begin_src bash
+  # POST /assets
+  # Content-Type: text/plain; charset=UTF-8
   cat .Dockerfile | dquack createAsset
   dquack createAsset < .Dockerfile
   dquack createAsset -
   dquack createAsset -f ./.Dockerfile
 #+end_src
-**** request
-POST /assets
-Content-type: text/plain; charset=UTF-8
-body: string
 *** Server
 
 If the dockerfile fails to conform to the standards it will be rejected.

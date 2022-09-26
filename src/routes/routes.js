@@ -16,9 +16,9 @@ const attachSession = async (ctx, next) => {
 }
 
 const logRouteInformation = async (ctx, next) => {
-  log.msg(`#puser:#p #g${ctx.state.user}#g`);
-  log.msg(`#papp:#p #g${ctx.state.app}#g`);
-  log.msg(`#p${ctx.method}:#p #g${ctx.href}#g`);
+  log.fmt(`user: ${ctx.state.user}`);
+  log.fmt(`app: ${ctx.state.app}`);
+  log.fmt(`${ctx.method}: ${ctx.href}`);
   await next();
 }
 
@@ -49,7 +49,7 @@ miscRouter.get('/', async (ctx, next) => {
 });
 
 miscRouter.get('/test', async (ctx, next) => {
-  return ctx.response.body = 'test';
+  return ctx.response.body = {}
 })
 
 function registerRoutes(app) {
