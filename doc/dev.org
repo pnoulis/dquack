@@ -102,41 +102,44 @@ The services returned will be of the form:
 ** What is an asset
 Dquack abstracts Dockerfiles into Assets. An Asset is a Dockerfile that has
 passed validation tests and hence forth may be treated as such. A Service may
-only be procured if it is supported by a valid Asset.
+only be procured if it is based on a valid Asset.
 
 ** layout of a conformant Dockerfile
-
 A Dockerfile that is pushed into dquack must conform to these 3 rules to qualify
 into an asset.
 
 1. An asset must not be derived from another asset.
 2. The following metadata must be present at the dockerfile
-   service.author="" 
-   service.name="name/version[_arch]" 
-   service.tag="should identify the version of the asset not the upstream service"
-   service.upstream.service="the upstream service" 
-   service.upstream.repository="the domain of the upstream image"
-   service.upstream.version="version if any" 
-   service.upstream.arch="architecture of the upstream version"
-   service.upstream.tag="upstream tag"
+   service.author=""
+   service.name=""
+   service.tag=""
 3. It must successfully build.
   
 Preferably one may use dquack to provide a Dockerfile template.
 *** service.author
-A string [a-zA-Z]
+https://systemd.io/USER_NAMES/ -> strict mode
+^[a-zA-Z_][a-zA-Z0-9_-]{0,30}$
+The current user's registered login name.
 *** service.name
-The service.name should uniquely identify the service being provided including
-version and possibly architecture.
-name/version[_arch]
-*** service.tag
-A string [a-zA-Z0-9-_.]
-*** service.upstream.service
-A string [a-Z-_./]
-*** service.upstream.repository
-*** service.upstream.version
-*** service.upstream.arch
-*** service.upstream.tag
+PROGRAM_NAME/VERSION[_ARCH]
+^[a-z](?:(?:\/[a-z])?(?:[-_.]{0,2}[a-z0-9])*)*$
+LENGTH: 233
 
+Must conform to the docker image name standards. It would be beneficial to the
+user to have the name mean the program's name that the service will run followed
+by the version of the program and possibly architecture. However there is no way
+to verify semantic conformity.
+*** service.tag
+^\w[-.\w]{0,126}[a-zA-Z0-9]$
+
+The tag should uniquely identify the version of the asset not the program being
+run by the service.
+*** OPTIONAL metadata
+service.upstream.service="the upstream service" 
+service.upstream.repository="the domain of the upstream image"
+service.upstream.version="version if any" 
+service.upstream.arch="architecture of the upstream version"
+service.upstream.tag="upstream tag"
 ** Pushing a dockerfile into dquack
 This is done through a client.
 
