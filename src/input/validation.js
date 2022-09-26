@@ -101,6 +101,7 @@ const DOCKER_NAME_RE = /^[a-z](?:\/{1,1}[a-z]|[-.\w])+$/ // 253 characters in to
 const DOCKER_TAG_RE = /^\w[-.\w]{0,127}$/; // 128 characters in total
 //  ^(?:[a-z]*?|\/[a-z](?:[-._]{0,2}[a-z0-9])*(\/\b)?)*$
 // REGISTRY[:PORT]/USER/REPO[:TAG]
+// ^[a-z](?:(?:\/[a-z])?(?:[-_.]{0,2}[a-z0-9])*)*$
 
 const getInputMap = () => {
   return {
