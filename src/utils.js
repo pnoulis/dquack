@@ -129,38 +129,6 @@ TimeUtils.prototype.greaterThan = function compareThisDateToArgDate(datetimeA, d
   return datetimeA > datetimeB ? true : false;
 }
 
-
-/**
- *  REGEX UTILS
- */
-
-/**
- * A not exchaustive list of regex syntax for the javascript engine
- *
- * Basic Features
- * https://www.regular-expressions.info/refbasic.html
- * Special and Non-printable Characters
- * https://www.regular-expressions.info/refcharacters.html
- * Character classes
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes
- * Archors
- * https://www.regular-expressions.info/refanchors.html
- * Word boundaries
- * https://www.regular-expressions.info/refwordboundaries.html
- * Flags
- * g = global search
- * i = case insensitive
- * m = ^ and $ match newline characters
- * s = allows . to match newline characters
- *
- * A regex is created by using either a regex literal:
- * /regexLiteral/flags;
- * OR
- * The regex constructor
- * new RegExp('regex', 'flags');
- */
-
-
 const utils = new Utils();
 utils.docker = new DockerUtils();
 utils.time = new TimeUtils();

@@ -16,9 +16,9 @@ const attachSession = async (ctx, next) => {
 }
 
 const logRouteInformation = async (ctx, next) => {
-  log.msg(`#puser:#p #g${ctx.state.user}#g
-#papp:#p #g${ctx.state.app}#g
-#p${ctx.method}:#p #g${ctx.href}#g`)
+  log.msg(`#puser:#p #g${ctx.state.user}#g`);
+  log.msg(`#papp:#p #g${ctx.state.app}#g`);
+  log.msg(`#p${ctx.method}:#p #g${ctx.href}#g`);
   await next();
 }
 

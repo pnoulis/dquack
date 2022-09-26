@@ -93,8 +93,17 @@ Asset.prototype.write = async function appendOrCreate(dockerfile, append) {
 
   return '';
 }
+Asset.prototype.isValid = function (data) {
+  // lock write
+  // validate metadata
+  // build image
+  // is valid or is not valide
+}
 
-Asset.prototype.enforceMetadata = function(data) {
+Asset.prototype.lockWrite = function (data) {
+}
+
+Asset.prototype.validateMetadata = function (data) {
   const metadata = new Map([
     ['service.author', ''],
     ['service.name', ''],
@@ -110,6 +119,8 @@ Asset.prototype.enforceMetadata = function(data) {
   })
 
   return metadata;
+}
+Asset.prototype.hash = function contentHash(data) {
 }
 
 Asset.prototype.cat = function returnBufferOrString(asset) {

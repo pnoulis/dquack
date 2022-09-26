@@ -141,7 +141,18 @@ service.upstream.version="version if any"
 service.upstream.arch="architecture of the upstream version"
 service.upstream.tag="upstream tag"
 ** Pushing a dockerfile into dquack
-This is done through a client.
+*** Client
+#+begin_src bash
+  cat .Dockerfile | dquack createAsset
+  dquack createAsset < .Dockerfile
+  dquack createAsset -
+  dquack createAsset -f ./.Dockerfile
+#+end_src
+**** request
+POST /assets
+Content-type: text/plain; charset=UTF-8
+body: string
+*** Server
 
 If the dockerfile fails to conform to the standards it will be rejected.
 *** DONE client may upload new assets

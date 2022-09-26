@@ -8,7 +8,7 @@ const router = new Router();
 
 // instantiate Service for subsequent middleware
 router.use(async (ctx, next) => {
-  ctx.state.service = new Service(ctx.query.user, ctx.query.app);
+  ctx.state.service = new Service(ctx.state.user, ctx.state.app);
   await next();
 });
 
