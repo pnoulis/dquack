@@ -14,6 +14,7 @@
 !/tmp/.gitkeep
 
 /scripts/client/var
+/var
 
 # ---------------- MY PERSONAL ADDITIONS ---------------------- #
 
