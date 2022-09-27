@@ -13,6 +13,8 @@
 /tmp/*
 !/tmp/.gitkeep
 
+/scripts/client/var
+
 # ---------------- MY PERSONAL ADDITIONS ---------------------- #
 
 
