@@ -9,7 +9,7 @@
 # variables for any environment; (dev | prod | ...)
 # .*.defaults .*.example are tracked
 .env*
-# tmp for experients
+# tmp for experiments
 /tmp/*
 !/tmp/.gitkeep
 
