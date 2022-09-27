@@ -3,7 +3,7 @@
  */
 
 import { readdir, stat, open } from 'node:fs/promises';
-import { basename } from 'node:path'
+import { basename } from 'node:path';
 import { resolve } from 'node:path';
 import { config, utils } from '../utils.js';
 import Image from '../services/image.js';

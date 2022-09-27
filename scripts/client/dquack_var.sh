@@ -8,6 +8,11 @@ PREFIX='/'
 ## ---------------------- ROUTES ------------------------ ##
 ## ------------------------------------------------------ ##
 function home {
+    URL="$(makeURL $PREFIX)"
+    [[ $? -gt 0 ]] && {
+        echo "$SCRIPT": no route
+        exit 1
+    }
     echo home
 }
 

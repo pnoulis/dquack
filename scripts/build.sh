@@ -33,7 +33,7 @@ watch)
   {
     webpack --watch </dev/null &
     npx nodemon ./build/main.bundle.cjs
-  } &
+  }
   ;;
 run)
   kill $(pgrep -f main.bundle.cjs)

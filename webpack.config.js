@@ -1,7 +1,8 @@
 import { resolve, parse } from 'node:path';
-import CopyPlugin from 'copy-webpack-plugin';
+import EventHooksPlugin from 'event-hooks-webpack-plugin';
+import { handlers } from './config/lib_webpack.js';
 
-const projectRoot = parse(new URL(import.meta.url).pathname).dir
+const projectRoot = parse(new URL(import.meta.url).pathname).dir;
 
 export default {
   mode: `${process.env.NODE_ENV}`,
@@ -11,20 +12,20 @@ export default {
   output: {
     filename: '[name].bundle.cjs',
     path: resolve(projectRoot, 'build'),
-    clean: true
+    clean: {
+      keep: /var|assets/
+    }
   },
   resolve: {
     modules: ['node_modules'],
     preferRelative: false
   },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: resolve(projectRoot, 'assets', 'services'), to: resolve(projectRoot, 'build', 'assets', 'services') }
-      ]
-    })
-  ],
   experiments: {
     topLevelAwait: true
-  }
+  },
+  plugins: [
+    new EventHooksPlugin({
+      done: handlers.onDone
+    })
+  ]
 }
