@@ -150,10 +150,10 @@ If it is not stale then return that instance; no need to build any new
 If it is stale create Nth instance and try and remove previous ones.
 * Client
 ** dquack-asset
-*** dquack-asset push
 *** dquack-asset ls
-*** dquack-asset rm
 *** dquack-asset pull
+*** dquack-asset push 
+*** dquack-asset rm 
 ** dquack-service
 * container running mssql in windows 10 through wsl2
 standard mssql *host* port: 1433

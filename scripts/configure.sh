@@ -5,11 +5,17 @@ CLIENT=${SCRIPT_DIR}/client/dquack.sh
 
 alias dquack=$CLIENT
 
-# Ensure sponge installed
+# Ensure sponge is installed
 which sponge &> /dev/null
 [[ $? -gt 0 ]] && cat <<EOF
 Missing dependency: sponge
 Install from *moreutils*
+EOF
+
+# Ensure curl is installed
+which curl &> /dev/null
+[[ $? -gt 0 ]] && cat <<EOF
+Missing dependency: curl
 EOF
 
 
