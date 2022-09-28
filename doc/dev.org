@@ -1,9 +1,10 @@
-* Assets
-** What is an asset
+* Server
+** Assets
+*** What is an asset
 Dquack abstracts Dockerfiles into Assets. An Asset is a Dockerfile that has
 passed validation tests and hence forth may be treated as such. A Service may
 only be procured if it is based on a valid Asset.
-** layout of a conformant Dockerfile
+*** layout of a conformant Dockerfile
 A Dockerfile that is pushed into dquack must conform to these 4 rules to qualify
 into an asset.
 
@@ -16,11 +17,11 @@ into an asset.
 4. The dockerfile must successfully build.
   
 Preferably one may use dquack to provide a Dockerfile template.
-*** service.author
+**** service.author
 https://systemd.io/USER_NAMES/ -> strict mode
 ^[a-zA-Z_][a-zA-Z0-9_-]{0,30}$
 The current user's registered login name.
-*** service.name
+**** service.name
 PROGRAM_NAME/VERSION[_ARCH]
 ^[a-z](?:(?:\/[a-z])?(?:[-_.]{0,2}[a-z0-9])*)*$
 LENGTH: 233
@@ -29,19 +30,19 @@ Must conform to the docker image name standards. It would be beneficial to the
 user to have the name mean the program's name that the service will run followed
 by the version of the program and possibly architecture. However there is no way
 to verify semantic conformity.
-*** service.tag
+**** service.tag
 ^\w[-.\w]{0,126}[a-zA-Z0-9]$
 
 The tag should uniquely identify the version of the asset not the program being
 run by the service.
-*** OPTIONAL metadata
+**** OPTIONAL metadata
 service.upstream.service="the upstream service" 
 service.upstream.repository="the domain of the upstream image"
 service.upstream.version="version if any" 
 service.upstream.arch="architecture of the upstream version"
 service.upstream.tag="upstream tag"
-** Pushing a dockerfile into dquack
-*** Client
+*** Pushing a dockerfile into dquack
+**** Client
 #+begin_src bash
   # POST /assets
   # Content-Type: text/plain; charset=UTF-8
@@ -50,18 +51,23 @@ service.upstream.tag="upstream tag"
   dquack createAsset -
   dquack createAsset -f ./.Dockerfile
 #+end_src
-*** Server
+**** Server
 
 If the dockerfile fails to conform to the standards it will be rejected.
-*** DONE client may upload new assets
+**** DONE client may upload new assets
 CLOSED: [2022-09-25 Sun 17:02]
 
-*** DONE server can successfully receive a dockerfile either as a file or content
+**** DONE server can successfully receive a dockerfile either as a file or content
 CLOSED: [2022-09-25 Sun 17:01]
 
-*** TODO Server performs validations
-*** TODO Server understands how to append to an already created dockerfile
-** Naming convention
+**** TODO Server performs validations
+**** TODO Server understands how to append to an already created dockerfile
+*** Dockerfiles to assets
+states:
+   [hash].validate
+   [hash].translate
+   [tail.name].[tail.head].queue
+*** Naming convention
 An asset's name is derived from metadata found within an uploaded Dockerfile.
 <service.author>.<service.name>.<service.tag>.Dockerfile
 (part.part.part.Dockerfile)
@@ -81,13 +87,13 @@ One should produce the following filename:
 
 master.mssql_server-201$.01.Dockerfile
 
-*** <service.name>
+**** <service.name>
 The service.name should uniquely identify the service being provided including
 version and possibly architecture.
 
 name/version[_arch]
 
-** Mapping a user requested service to an asset
+*** Mapping a user requested service to an asset
 A user requests a service through a service name.
 A user may request to to list the available assets through the url:
 get:dquack/service
@@ -112,13 +118,13 @@ mssql.2019-latest.Dockerfile
 by requesting:
 mssql:2019-latest
  
-* procure
-** list all image instances of a service
+** procure
+*** list all image instances of a service
 docker image ls --quiet --filter "reference=dquack/<repository>/<service>"
 docker images --quiet --filter "reference=dquack/<repository>/<service>"
 
-** error cases
-*** trying to remove an image while it is being referenced by containers
+*** error cases
+**** trying to remove an image while it is being referenced by containers
 GET :
 http://localhost:8080/service/bratnet%2Fmssql:2019?user=pavlos&app=app_name
 Error response from daemon: conflict: unable to remove repository reference
@@ -130,7 +136,7 @@ Image wants to build a new image because the referenced asset has
 been modified since the image was last built but it cannot because thhe stale
 image is referenced by running containers.
 
-**** Solution #1
+***** Solution #1
 on each procurement request try and remove all image instances of the requested
 service. those that have not been removed are being referenced by running
 containers. build a new image where the tag is the Nth instance. The Nth
@@ -139,7 +145,7 @@ instance = Ninstances + 1
 Which leads to a naming problem. The Nth + 1 instance may not be given a name
 equal to the length of instances because that number may already be taken.
 
-**** Solution #2
+***** Solution #2
 Instead of acting in a sweeping manner like solution #1 behave
 in a much more controlled way.
 
@@ -155,7 +161,8 @@ If it is stale create Nth instance and try and remove previous ones.
 *** dquack-asset push 
 *** dquack-asset rm 
 ** dquack-service
-* container running mssql in windows 10 through wsl2
+* Docker
+** container running mssql in windows 10 through wsl2
 standard mssql *host* port: 1433
 standard mssql *container* port: 1433
 docker run usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
@@ -163,13 +170,13 @@ docker run usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 The service within the docker container also exposes port 1433
 
 ENV MSSQL_SA_PASSWORD="Pavlos1993"
-** connect to the container
+*** connect to the container
 docker exec -it <container name|ID> /bin/bash
-** check databases
+*** check databases
 select name
 from sys.databases;
 GO
-** using sqlcmd to connect to the container from any host
+*** using sqlcmd to connect to the container from any host
 sqlcmd -S localhost,51433 -U sa -P Pavlos1993
 
 the server string may be of the form:
@@ -179,35 +186,50 @@ the host is either:
 an ip address
 a host name
 
-** options
+*** options
 --attach t
 --detach d
 --interactive i
 --publish p
 --publish-all P
-** container config #1
-*** behavior
+*** container config #1
+**** behavior
 run container in the foreground
 attaches stdin to the containers std*
 maps ports
 run sql server
-*** command
+**** command
 docker run \
 --publish 51433:1433 \
 --attach stdin \
 --interactive \
 bratnet/mssql:2019
-** contaienr config #2
-*** behavior
+*** contaienr config #2
+**** behavior
 runs container in the background
 map ports
 run sql server
-*** command
+**** command
 docker run \
 --detach
 --publish 51433:1433 \
 bratnet/mssql:2019
 
+* Development
+** target dir structure
+dquack.js
+bin/
+share/
+share/man
+public/
+public/assets/
+var/
+var/spool/
+var/log/
+etc/
+** Build process
+** use cases
+run watch -> any change 
 * glossary
 ** Asset
 A Dockerfile from which image instances are based.

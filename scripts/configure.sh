@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+SOURCE_DIR=$(realpath $SCRIPT_DIR/..)
 CLIENT=${SCRIPT_DIR}/client/dquack.sh
 
 alias dquack=$CLIENT
