@@ -1,6 +1,9 @@
 #!/bin/bash
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+SOURCE_DIR=$(dirname $SCRIPT_DIR)
+PREFIX=${SOURCE_DIR}/build
+BUILD_DIR=${PREFIX}
 CLIENT=${SCRIPT_DIR}/client/dquack.sh
 
 alias dquack=$CLIENT

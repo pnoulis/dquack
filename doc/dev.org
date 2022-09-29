@@ -208,6 +208,9 @@ docker run \
 --publish 51433:1433 \
 bratnet/mssql:2019
 
+* Development
+** Make
+build all necesssary directories
 * glossary
 ** Asset
 A Dockerfile from which image instances are based.
