@@ -13,7 +13,7 @@ export default {
     filename: '[name].bundle.cjs',
     path: resolve(projectRoot, 'build'),
     clean: {
-      keep: /var|assets/
+      keep: /var|public|share|etc|bin/
     }
   },
   resolve: {

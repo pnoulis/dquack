@@ -1,40 +1,38 @@
-function DQuack() {
+function WebpackEventHandlers() {
 }
 
-DQuack.prototype.pullAssetsDir = function mvAssetsFromSourceTreeToBuildTree() {
-
-}
-
-
-const Handlers = function DQuackWebpackEventHandlers() {
-}
-
-Handlers.prototype.onDone = function(stats) {
+WebpackEventHandlers.prototype.onDone = function() {
   console.log('handle done');
-  console.log(stats);
 }
 
-Handlers.prototype.onFailed = function() {
+WebpackEventHandlers.prototype.onFailed = function() {
   console.log('handle failed');
 }
 
-Handlers.prototype.onInvalid = function() {
+WebpackEventHandlers.prototype.onInvalid = function() {
   console.log('handle invalid');
 }
 
-Handlers.prototype.onWatchClose = function() {
+WebpackEventHandlers.prototype.onWatchClose = function() {
   console.log('handle watch close');
 }
 
 
-let handlers;
-
-if (!handlers) {
-  handlers = new Handlers();
+function Build(config) {
+  WebpackEventHandlers.call(this);
 }
 
-export {
-  handlers
+Build.prototype = Object.create(WebpackEventHandlers.prototype, {
+  constructor: {
+    value: Build,
+    enumerable: false,
+    writable: true,
+    configurable: true
+  }
+});
+
+Build.prototype.makeDirHierarchy = function() {
+
 }
 
-
+export default Build;
