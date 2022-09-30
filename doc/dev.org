@@ -223,6 +223,7 @@ share/
 share/man
 public/
 public/assets/
+public/templates/
 var/
 var/spool/
 var/log/
